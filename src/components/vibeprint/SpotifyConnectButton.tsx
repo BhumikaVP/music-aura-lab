@@ -17,7 +17,7 @@ export function SpotifyConnectButton() {
         description: "Credentials aren't configured. Running the demo analysis instead.",
         action: {
           label: "Demo",
-          onClick: () => navigate({ to: "/analyze", search: { mode: "demo" } }),
+          onClick: () => navigate({ to: "/analyze" }),
         },
       });
     }, 900);
