@@ -42,7 +42,8 @@ export function buildGenreDNA(user: SpotifyUser): GenreSlice[] {
     .slice(0, 5);
   // normalize to 100
   const sum = slices.reduce((a, s) => a + s.percent, 0);
-  if (slices.length && sum !== 100) slices[0].percent += 100 - sum;
+  const first = slices[0];
+  if (first && sum !== 100) first.percent += 100 - sum;
   return slices;
 }
 
@@ -192,7 +193,7 @@ export function analyze(user: SpotifyUser): Analysis {
     .map((r) => ({ ...r, norm: r.score / max }))
     .sort((x, y) => y.norm - x.norm);
 
-  const winner = scored[0];
+  const winner = scored[0]!;
   const gap = winner.norm - (scored[1]?.norm ?? 0);
   const confidence = Math.round(clamp(0.68 + gap * 0.8 + s.diversity * 0.05) * 100);
 
