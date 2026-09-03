@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AnalyzeRouteImport } from './routes/analyze'
+import { Route as ConnectRouteImport } from './routes/connect'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnalyzeRoute = AnalyzeRouteImport.update({
+  id: '/analyze',
+  path: '/analyze',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConnectRoute = ConnectRouteImport.update({
+  id: '/connect',
+  path: '/connect',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analyze': typeof AnalyzeRoute
+  '/connect': typeof ConnectRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analyze': typeof AnalyzeRoute
+  '/connect': typeof ConnectRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analyze': typeof AnalyzeRoute
+  '/connect': typeof ConnectRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/analyze' | '/connect'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/analyze' | '/connect'
+  id: '__root__' | '/' | '/analyze' | '/connect'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnalyzeRoute: typeof AnalyzeRoute
+  ConnectRoute: typeof ConnectRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/analyze': {
+      id: '/analyze'
+      path: '/analyze'
+      fullPath: '/analyze'
+      preLoaderRoute: typeof AnalyzeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/connect': {
+      id: '/connect'
+      path: '/connect'
+      fullPath: '/connect'
+      preLoaderRoute: typeof ConnectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnalyzeRoute: AnalyzeRoute,
+  ConnectRoute: ConnectRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
