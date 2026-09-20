@@ -1,795 +1,349 @@
-# Music Moods
+# 🎵 VibePrint
 
-Build a polished, production-quality web app called “VibePrint” — a Spotify Music Personality Analyzer, inspired by Spotify Wrapped and modern personality apps.
+> Your music knows you better than you think.
 
-The app should analyze a user's Spotify listening data and generate a beautiful, highly shareable music personality profile containing their listening archetype, music DNA, mood spectrum, music alter ego, and personalized insights.
+VibePrint is a Spotify-inspired music personality analyzer that transforms listening habits into a personalized, visually rich music personality profile.
 
-1. CORE EXPERIENCE
+It analyzes music preferences to generate:
 
-The main user flow should be:
+- 🎭 Listening Archetype
+- 🧬 Music DNA
+- 🌈 Mood Spectrum
+- 🎧 Music Alter Ego
+- ✨ Personalized Insights
+- 📸 Shareable Personality Card
+- 🔗 Public Share Profile
 
-Landing Page → Connect Spotify → Analyze Listening Data → Animated Analysis → Personality Results → Shareable Profile Card → Download/Share
+---
 
-The experience should feel fun, premium, modern, highly visual, and addictive, similar to Spotify Wrapped.
+## ✨ Features
 
-Do NOT make it look like a generic dashboard. It should feel like a consumer social product.
+### 🎭 Music Personality Archetypes
 
-2. LANDING PAGE
+Classifies listeners into **10 archetypes** based on weighted scoring across listening characteristics such as energy, valence, danceability, acousticness, diversity, late-night listening, era, popularity, and genre traits.
 
-Create a visually striking landing page.
+The 10 archetypes are:
 
-Hero heading:
+1. The Dreamer
+2. The Midnight Architect
+3. The Explorer
+4. The Hype Machine
+5. The Nostalgic Soul
+6. The Rebel
+7. The Mood Curator
+8. The Trend Rider
+9. The Romantic
+10. The Sonic Nomad
 
-“Your music knows you better than you think.”
+### 🧬 Music DNA
 
-Subtitle:
+Visualizes the user's dominant genre buckets and calculates an overall genre diversity score.
 
-“Connect Spotify and discover the personality hiding inside your playlists.”
+### 🌈 Mood Spectrum
 
-Primary CTA:
+Analyzes available music characteristics including:
 
-“Discover My Music Personality”
+- Energy
+- Happiness / Valence
+- Danceability
+- Calmness
+- Emotional Intensity
 
-Secondary text:
+### 🎧 Music Alter Ego
 
-“100% personalized • Powered by your listening habits”
+Generates a personalized music persona with:
 
-Add an attractive animated visual showing floating album covers, music waves, genre bubbles, and personality keywords.
+- Alter-ego name
+- Tagline
+- Description
+- Personality traits
+- Soundtrack
 
-Include a preview section showing an example personality card.
+### ✨ Personalized Insights
 
-Example:
+Produces short, shareable observations about the user's listening personality based on their calculated music signals.
 
-THE MIDNIGHT ARCHITECT
+### 📸 Shareable Personality Card
 
-“Your taste lives somewhere between late-night thoughts and main-character energy.”
+Generates a vertical **1080×1920** personality card designed for social sharing. The card can be downloaded as a PNG.
 
-Add sections:
+### 🔗 Public Profiles
 
-How It Works
+Each generated personality gets a shareable public profile URL (`/profile/:username`).
 
-Music Archetypes
+> Profiles are stored locally in the browser's `localStorage`, so they remain on the device that created them.
 
-What We Analyze
+### 🧪 Demo Mode
 
-Example Results
+The application includes a realistic demo mode with sample listening data, so the complete experience can be tested without Spotify credentials.
 
-3. SPOTIFY CONNECTION
+---
 
-Create a Spotify OAuth connection screen.
+## 🧠 How It Works
 
-Button:
-
-“Connect Spotify”
-
-After authentication, retrieve the user's Spotify profile and listening information.
-
-Use Spotify data such as:
-
-Top artists
-
-Top tracks
-
-Recently played tracks
-
-Artist genres
-
-Track popularity
-
-Audio characteristics when available
-
-Listening patterns
-
-Genre diversity
-
-Request only the permissions necessary for the analysis.
-
-If Spotify OAuth credentials are not configured yet, create a clean demo/mock-data mode so the entire application can still be demonstrated.
-
-Add a clearly visible:
-
-“Try Demo Analysis”
-
-button.
-
-The demo should use realistic sample Spotify data.
-
-4. ANALYSIS SCREEN
-
-After connecting Spotify, show a cinematic analysis experience.
-
-Display:
-
-“Reading your musical DNA…”
-
-Then animate through stages:
-
-Analyzing your favorite artists
-
-Mapping your genres
-
-Measuring your mood
-
-Detecting your listening patterns
-
-Finding your alter ego
-
-Building your music personality
-
-Use smooth animations and progress indicators.
-
-Do not make this screen take too long. Use a short simulated analysis if necessary.
-
-5. PERSONALITY ALGORITHM
-
-Create a custom scoring system rather than simply randomly assigning personalities.
-
-Classify the user into one primary archetype based on their listening data.
-
-Support at least these 10 archetypes:
-
-1. THE DREAMER
-
-High acousticness + emotional/positive listening + lower energy.
-
-Traits:
-
-Imaginative
-
-Emotional
-
-Reflective
-
-2. THE MIDNIGHT ARCHITECT
-
-Strong late-night listening + alternative/indie tendencies + thoughtful music patterns.
-
-Traits:
-
-Deep thinker
-
-Creative
-
-Independent
-
-3. THE EXPLORER
-
-Very high genre diversity and artist diversity.
-
-Traits:
-
-Curious
-
-Adventurous
-
-Open-minded
-
-4. THE HYPE MACHINE
-
-High energy + high danceability + upbeat music.
-
-Traits:
-
-Ambitious
-
-Energetic
-
-Motivated
-
-5. THE NOSTALGIC SOUL
-
-Strong preference toward older music and familiar artists.
-
-Traits:
-
-Sentimental
-
-Loyal
-
-Romantic
-
-6. THE REBEL
-
-Rock, punk, metal, alternative or high-intensity music.
-
-Traits:
-
-Independent
-
-Fearless
-
-Nonconformist
-
-7. THE MOOD CURATOR
-
-Wide emotional range with carefully varied listening patterns.
-
-Traits:
-
-Emotionally aware
-
-Adaptive
-
-Thoughtful
-
-8. THE TREND RIDER
-
-High popularity/viral music and current artists.
-
-Traits:
-
-Social
-
-Current
-
-Trend-aware
-
-9. THE ROMANTIC
-
-Strong emotional/romantic music patterns.
-
-Traits:
-
-Passionate
-
-Sensitive
-
-Expressive
-
-10. THE SONIC NOMAD
-
-Extremely diverse music taste across cultures, languages and genres.
-
-Traits:
-
-Adventurous
-
-Experimental
-
-Unpredictable
-
-The algorithm should calculate weighted scores for each archetype and select the highest scoring archetype.
-
-Also show a percentage confidence score.
-
-Example:
-
-You are 87% The Midnight Architect
-
-6. MUSIC DNA
-
-Create a beautiful visualization showing the user's top genres.
-
-Example:
-
-Music DNA
-
-Pop — 35%
-Indie — 25%
-Rock — 18%
-Electronic — 12%
-R&B — 10%
-
-Use a visually attractive donut/pie chart.
-
-Also show:
-
-Genre Diversity Score: 82/100
-
-and:
-
-Your taste spans 17 different genres.
-
-7. MOOD SPECTRUM
-
-Create a visual mood analysis using available audio features.
-
-Analyze:
-
-Energy
-
-Danceability
-
-Valence
-
-Acousticness
-
-Tempo
-
-Convert these into human-friendly personality dimensions:
-
-Energy
-78%
-
-Happiness
-71%
-
-Danceability
-64%
-
-Calmness
-42%
-
-Emotional Intensity
-81%
-
-Use animated progress bars or radial indicators.
-
-Avoid making the interface look like a boring analytics dashboard.
-
-8. MUSIC ALTER EGO
-
-This should be one of the most visually impressive sections.
-
-Generate an AI-style personalized alter ego based on the user's listening data.
-
-Example:
-
-THE MIDNIGHT ARCHITECT
-
-“You turn feelings into fuel.”
-
-“You gravitate toward music that feels cinematic, introspective and slightly unpredictable. You probably have a playlist for every version of yourself.”
-
-Traits:
-
-CREATIVE
-DEEP THINKER
-INDEPENDENT
-EMOTIONAL
-
-Add:
-
-Your soundtrack:
-“Late-night city lights and unfinished ideas.”
-
-Make the description dynamic based on the user's actual data.
-
-If an AI API is available, use it to generate the description. Otherwise provide a deterministic fallback generated from the personality scores.
-
-9. FUN PERSONALITY INSIGHTS
-
-Generate 4–6 short personalized insights.
-
-Examples:
-
-YOUR MUSIC SUPERPOWER
-
-“Finding beauty in songs nobody else has discovered yet.”
-
-YOUR MAIN CHARACTER ENERGY
-
-“Walking through a city at midnight with headphones on.”
-
-YOUR MUSICAL RED FLAG
-
-“You say you listen to everything. Your Spotify history disagrees.”
-
-YOUR PERFECT SOUNDTRACK
-
-“Rainy evenings + neon lights + one emotionally devastating song.”
-
-YOUR MUSIC AGE
-
-“Your taste feels 4 years older than your actual age.”
-
-These should change based on the user's data.
-
-10. SHAREABLE PERSONALITY CARD
-
-Create a dedicated share-card component optimized for:
-
-1080 × 1920 Instagram Story format
-
-The card should include:
-
-VibePrint logo
-
-User's profile image
-
-Archetype
-
-Archetype percentage
-
-Short personality description
-
-Genre DNA
-
-Mood score
-
-3 personality traits
-
-Small Spotify-style visual elements
-
-VibePrint branding
-
-Example:
-
-VIBEPRINT
-
-YOUR MUSIC PERSONALITY
-
-THE MIDNIGHT ARCHITECT
-
-87%
-
-Creative • Independent • Reflective
-
-“Your playlists sound like thoughts
-you haven't said out loud yet.”
-
-MUSIC DNA
-
-INDIE 35%
-POP 25%
-ALT 20%
-OTHER 20%
-
-MOOD
-
-ENERGY 78%
-HAPPINESS 71%
-EMOTION 81%
-
-DISCOVER YOURS
-
-vibeprint.app
-
-Make this card extremely polished because it is the main viral/shareable output.
-
-11. SHARE FUNCTIONALITY
-
-Add buttons:
-
-Download Card
-
-Share
-
-Copy Link
-
-The Download Card button should export the personality card as a PNG image.
-
-Use an appropriate client-side image export library such as html-to-image or html2canvas.
-
-The generated image should preserve the exact visual design.
-
-For Share:
-
-Use the Web Share API when available.
-
-Fallback:
-
-“Image saved — share it on Instagram, WhatsApp or X.”
-
-12. SHAREABLE PUBLIC PROFILE
-
-Create a public profile route such as:
-
-/profile/[username]
-
-Example:
-
-/profile/demo-user
-
-Show the personality card and a CTA:
-
-“Discover your music personality →”
-
-Add a unique share URL for each generated profile.
-
-13. RESULTS PAGE
-
-The results page should feel like a Spotify Wrapped reveal.
-
-Structure it as a sequence of visually distinct sections:
-
-“We listened closely…”
-
-“Your music personality is…”
-
-Archetype reveal
-
-Music DNA
-
-Mood Spectrum
-
-Music Alter Ego
-
-Fun Insights
-
-Shareable Card
-
-“Want to discover your friends' music personalities?”
-
-Use smooth scroll animations and reveal animations.
-
-Use Framer Motion for animations.
-
-14. DESIGN SYSTEM
-
-Visual style:
-
-Dark background
-
-Vibrant gradients
-
-Neon-inspired accents
-
-Large typography
-
-Rounded cards
-
-Glassmorphism used carefully
-
-Subtle grain/noise texture
-
-Soft glow effects
-
-Smooth micro-interactions
-
-Animated gradients
-
-Strong visual hierarchy
-
-Use colors inspired by music apps but DO NOT simply copy Spotify's interface.
-
-Suggested palette:
-
-Background:
-#09090B
-
-Primary gradient:
-Purple → Pink → Orange
-
-Accent:
-Electric green
-
-Text:
-White / soft gray
-
-Use generous spacing.
-
-Typography should feel modern and editorial.
-
-Suggested fonts:
-
-Inter
-
-Space Grotesk
-
-DM Sans
-
-Use a bold display font for archetype names.
-
-15. RESPONSIVE DESIGN
-
-The app must be mobile-first.
-
-Optimize for:
-
-Mobile
-
-Tablet
-
-Desktop
-
-The share card should look perfect on mobile.
-
-Desktop should use a centered max-width layout.
-
-Do not allow charts or cards to overflow on mobile.
-
-16. COMPONENT STRUCTURE
-
-Create reusable components such as:
-
-Navbar
-
-HeroSection
-
-SpotifyConnectButton
-
-DemoButton
-
-AnalysisLoader
-
-ArchetypeReveal
-
-GenreDNA
-
-MoodSpectrum
-
-AlterEgoCard
-
-PersonalityInsights
-
-ShareCard
-
-ShareActions
-
-Footer
-
-Keep components modular and clean.
-
-17. DATA MODEL
-
-Create a clean structure for:
-
-User:
-
-id
-
-spotifyId
-
-displayName
-
-profileImage
-
-topArtists
-
-topTracks
-
-genres
-
-audioFeatures
-
-Analysis:
-
-archetype
-
-archetypeScore
-
-genreDNA
-
-moodScores
-
-traits
-
-alterEgoName
-
-alterEgoDescription
-
-insights
-
-ShareProfile:
-
-id
-
-username
-
-analysisId
-
-createdAt
-
-18. DEMO MODE
-
-This is extremely important.
-
-The application MUST work even without Spotify credentials.
-
-Create realistic mock Spotify data for the demo.
-
-When the user clicks:
-
-Try Demo Analysis
-
-immediately run the full analysis flow and produce a polished example profile.
-
-Do not show empty charts or broken Spotify API calls.
-
-The demo should look like a real user's Spotify analysis.
-
-19. ERROR STATES
-
-Create polished error states for:
-
-Spotify authentication failure
-
-No listening history
-
-Spotify API unavailable
-
-Analysis failure
-
-Image export failure
-
-Always provide a recovery action.
-
-Example:
-
-“We couldn't read your Spotify data.”
-
-“Try reconnecting or explore a demo profile.”
-
-20. PERFORMANCE
-
-Keep the application fast.
-
-Lazy load heavy components
-
-Optimize images
-
-Avoid unnecessary API requests
-
-Cache Spotify analysis where appropriate
-
-Use loading skeletons
-
-Keep animations smooth
-
-21. IMPORTANT UX DETAILS
-
-Add small delightful interactions:
-
-Hover effects
-
-Button animations
-
-Number counting animations
-
-Chart animations
-
-Archetype reveal animation
-
-Confetti or subtle particles after analysis
-
-Copy-link success toast
-
-Download success toast
-
-Make the user feel like they are receiving a personalized discovery rather than looking at analytics.
-
-22. FINAL PRODUCT FEEL
-
-The final application should feel like:
-
-Spotify Wrapped × personality test × social media share card
-
-It should be visually impressive enough that screenshots immediately communicate the product.
-
-Prioritize:
-
-Beautiful UI
-
-Personality algorithm
-
-Spotify connection
-
-Shareable card
-
-AI-generated alter ego
-
-Smooth animations
-
-Mobile experience
-
-Do not build unnecessary admin dashboards or complicated features.
-
-Focus on making the core experience polished and demo-ready.
-
-Before finishing, test the complete flow:
-
-Landing → Demo/Spotify Connect → Analysis → Personality Reveal → Music DNA → Mood Spectrum → Alter Ego → Share Card → Download/Share → Public Profile.
-
-Make sure every button works and there are no placeholder sections in the final UI.
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/1e48ace6-398b-4958-8296-e043e9ab33ff).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
 ```
+Spotify / Demo Data
+        ↓
+  Listening Data
+        ↓
+ Feature Extraction
+        ↓
+ Personality Scoring
+        ↓
+Archetype Classification
+        ↓
+ Music DNA + Mood Analysis
+        ↓
+ Alter Ego + Insights
+        ↓
+  Shareable Profile
+```
+
+The archetype is selected using a **deterministic weighted scoring approach**, not random assignment.
+
+Signals extracted from the listening data include:
+
+- Energy, valence, danceability, acousticness, instrumentalness, tempo
+- Late-night listening ratio
+- Genre diversity
+- Artist loyalty
+- Average popularity
+- Release-era "oldness"
+- Mood range
+- Rock, romance, global, and alternative genre indicators
+
+Each archetype has a dedicated scoring function that weights relevant signals; the highest-scoring archetype is selected, normalized to a confidence percentage, and the closest runner-ups are also surfaced.
+
+---
+
+## 🎭 Personality Archetypes
+
+| Archetype | Description |
+| --- | --- |
+| **The Dreamer** | You gravitate toward soft, spacious, acoustic-leaning music that leaves room to feel things. Your playlists are less about hype and more about atmosphere. |
+| **The Midnight Architect** | You gravitate toward music that feels cinematic, introspective and slightly unpredictable. You probably have a playlist for every version of yourself. |
+| **The Explorer** | You refuse to live inside one genre. Your listening history reads like a map of everywhere you've been curious about lately. |
+| **The Hype Machine** | High energy, high tempo, high stakes. You use music like a power source and everyone around you can feel it. |
+| **The Nostalgic Soul** | You return to the songs that shaped you. Loyalty is your whole personality — to artists, to albums, to feelings. |
+| **The Rebel** | Guitars, grit and volume. You like music that pushes back, and you have never once cared about the algorithm's opinion. |
+| **The Mood Curator** | Your listening moves with your emotions — wide range, careful sequencing. You don't pick songs, you design moments. |
+| **The Trend Rider** | You live in the now. Your rotation matches the cultural moment, and your friends borrow your taste constantly. |
+| **The Romantic** | Your music is emotional architecture — soul, longing and melody. You'd rather feel too much than nothing at all. |
+| **The Sonic Nomad** | Languages, cultures, decades — nothing is off-limits. Your listening history is genuinely impossible to predict. |
+
+---
+
+## 🎨 User Experience
+
+1. **Landing page** — Introduces VibePrint and the two entry points.
+2. **Connect Spotify or try Demo** — Demo mode runs immediately with sample data.
+3. **Musical DNA analysis animation** — A staged loader visualizes the analysis process.
+4. **Personality reveal** — The winning archetype is presented with a match score and runner-ups.
+5. **Music DNA** — Animated genre bars and diversity score.
+6. **Mood Spectrum** — Animated meters for energy, happiness, danceability, calmness, and emotional intensity.
+7. **Music Alter Ego** — Name, tagline, description, traits, and soundtrack.
+8. **Personalized Insights** — Six shareable observations about the user's listening habits.
+9. **Shareable Card** — 1080×1920 PNG export for social stories.
+10. **Public Profile** — A `/profile/:username` page anyone can visit.
+
+---
+
+## 🛠️ Tech Stack
+
+- **React 19** — UI library
+- **TypeScript** — Type safety
+- **TanStack Start** — Full-stack React framework (file-based routing + server functions)
+- **TanStack Router / TanStack Query** — Routing and data fetching
+- **Tailwind CSS v4** — Styling
+- **Framer Motion** — Animations and scroll reveals (`motion` package)
+- **html-to-image** — PNG export for the share card
+- **Lucide React** — Icons
+- **Sonner** — Toast notifications
+- **shadcn/ui** — Reusable UI primitives (`src/components/ui/`)
+
+> The Spotify Web API is not currently wired into the live flow. Demo mode fully exercises the analysis and sharing pipeline.
+
+---
+
+## 📁 Project Structure
+
+```
+public/
+├── favicon.ico
+└── robots.txt
+
+src/
+├── components/
+│   ├── ui/                 # shadcn/ui primitives
+│   └── vibeprint/          # VibePrint-specific components
+│       ├── AlterEgoCard.tsx
+│       ├── AnalysisLoader.tsx
+│       ├── ArchetypeReveal.tsx
+│       ├── DemoButton.tsx
+│       ├── FloatingVisual.tsx
+│       ├── Footer.tsx
+│       ├── GenreDNA.tsx
+│       ├── MoodSpectrum.tsx
+│       ├── Navbar.tsx
+│       ├── PersonalityInsights.tsx
+│       ├── ProfileView.tsx
+│       ├── Reveal.tsx
+│       ├── ShareActions.tsx
+│       ├── ShareCard.tsx
+│       └── SpotifyConnectButton.tsx
+├── hooks/
+│   └── use-mobile.tsx
+├── lib/
+│   ├── utils.ts
+│   ├── error-capture.ts
+│   ├── error-page.ts
+│   └── vibeprint/          # Core analysis engine
+│       ├── analyze.ts
+│       ├── archetypes.ts
+│       ├── mockData.ts
+│       ├── store.ts
+│       └── types.ts
+├── routes/
+│   ├── __root.tsx          # Root layout (fonts, meta, toaster)
+│   ├── index.tsx           # Landing page
+│   ├── connect.tsx         # Spotify / Demo entry
+│   ├── analyze.tsx         # Analysis loader
+│   ├── results.tsx         # Personal results
+│   └── profile.$username.tsx # Public profile
+├── router.tsx
+├── server.ts
+├── start.ts
+└── styles.css              # Tailwind v4 theme tokens & utilities
+```
+
+- `src/lib/vibeprint/` — Core data models, analysis algorithm, demo data, and localStorage persistence.
+- `src/components/vibeprint/` — All UI components that render the profile, charts, cards, and animations.
+- `src/routes/` — TanStack Start file-based routes.
+
+---
+
+## 🚀 Getting Started
+
+This project uses **Bun** as its package manager (`bun.lock` and `bunfig.toml`).
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd tanstack_start_ts
+
+# Install dependencies
+bun install
+
+# Start the dev server
+bun run dev
+```
+
+The app will be available at `http://localhost:8080`.
+
+Other useful scripts:
+
+```bash
+bun run build      # Production build
+bun run build:dev  # Development build
+bun run lint       # Run ESLint
+bun run format     # Run Prettier
+```
+
+---
+
+## 🔐 Environment Variables
+
+No environment variables are required to run the app in **Demo Mode**.
+
+If you choose to wire up live Spotify OAuth in the future, you would need:
+
+```bash
+VITE_SPOTIFY_CLIENT_ID=your_client_id
+VITE_SPOTIFY_CLIENT_SECRET=your_client_secret
+VITE_SPOTIFY_REDIRECT_URI=http://localhost:8080/auth/callback
+```
+
+| Variable | Purpose |
+| --- | --- |
+| `VITE_SPOTIFY_CLIENT_ID` | Spotify application client ID |
+| `VITE_SPOTIFY_CLIENT_SECRET` | Spotify application client secret |
+| `VITE_SPOTIFY_REDIRECT_URI` | OAuth redirect URI registered in the Spotify app |
+
+---
+
+## 🎵 Spotify Setup (Optional)
+
+Live Spotify OAuth is currently scaffolded but not fully wired. To complete the integration:
+
+1. Create an app at the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard).
+2. Add the redirect URI (e.g. `http://localhost:8080/auth/callback`).
+3. Add the required environment variables from the section above.
+4. Implement the OAuth handshake and fetch the user's top artists, top tracks, and audio features.
+5. Pipe the fetched data into the existing `analyze()` function.
+
+Until then, **Demo Mode** can be used to experience the full analysis, share card, and public profile flow.
+
+---
+
+## 📸 Screenshots
+
+Add screenshots to `docs/screenshots/` and they will render here.
+
+| Screen | Placeholder |
+| --- | --- |
+| Landing Page | `docs/screenshots/landing.png` |
+| Personality Reveal | `docs/screenshots/reveal.png` |
+| Music DNA & Mood Spectrum | `docs/screenshots/dna-mood.png` |
+| Music Alter Ego | `docs/screenshots/alter-ego.png` |
+| Share Card | `docs/screenshots/share-card.png` |
+| Public Profile | `docs/screenshots/public-profile.png` |
+
+---
+
+## 🌐 Live Demo
+
+Live Demo: `ADD_DEPLOYED_URL_HERE`
+
+## 🎥 Demo Video
+
+Loom Walkthrough: `ADD_LOOM_URL_HERE`
+
+---
+
+## 🔒 Privacy
+
+- **Demo Mode** uses only sample data bundled with the app. Nothing is sent to any server.
+- **Profiles** are saved to the browser's `localStorage` on the device that created them.
+- **Public profile URLs** only work if the recipient is viewing the profile on the same device/browser where it was generated, because profiles are not synced to a central database.
+- No real Spotify data is currently accessed, stored, or transmitted.
+
+---
+
+## 🚧 Future Improvements
+
+- Full Spotify OAuth integration with real top artists, tracks, and audio features.
+- More sophisticated listening-history analysis (time-of-day patterns, seasonal taste shifts).
+- Friend-to-friend music compatibility scores.
+- Historical taste evolution timeline.
+- AI-generated playlist recommendations matched to the user's archetype.
+- Additional personality dimensions and sub-archetypes.
+
+---
+
+## 🏆 Hackathon Focus
+
+VibePrint is built around **personality-driven music analysis** and a **share-first experience**:
+
+- **Visual storytelling** — Neon gradients, glass cards, animated reveals, and a story-sized share card.
+- **Deterministic archetype scoring** — Every result is computed from real listening signals, not random.
+- **Personalized alter ego** — A unique persona, description, and soundtrack for every profile.
+- **Social profile sharing** — A public URL plus a downloadable card for Instagram stories.
+- **Demo-ready** — Judges can experience the complete flow end-to-end without any credentials.
+
+---
+
+## 👩‍💻 Author
+
+**Bhumika VP**
+
+- GitHub: [https://github.com/BhumikaVP](https://github.com/BhumikaVP)
