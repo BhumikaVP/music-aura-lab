@@ -67,11 +67,11 @@ Produces short, shareable observations about the user's listening personality ba
 
 Generates a vertical **1080×1920** personality card designed for social sharing. The card can be downloaded as a PNG.
 
-### 🔗 Public Profiles
+### 🔗 Public Profile URLs
 
-Each generated personality gets a shareable public profile URL (`/profile/:username`).
+Each generated personality produces a shareable profile URL (`/profile/:username`).
 
-> Profiles are stored locally in the browser's `localStorage`, so they remain on the device that created them.
+> Profiles are currently stored locally in the browser's `localStorage` and are therefore not synchronized across devices. The URL can be shared, but it will only resolve on the device/browser where the profile was originally created.
 
 ### 🧪 Demo Mode
 
@@ -144,7 +144,7 @@ Each archetype has a dedicated scoring function that weights relevant signals; t
 7. **Music Alter Ego** — Name, tagline, description, traits, and soundtrack.
 8. **Personalized Insights** — Six shareable observations about the user's listening habits.
 9. **Shareable Card** — 1080×1920 PNG export for social stories.
-10. **Public Profile** — A `/profile/:username` page anyone can visit.
+10. **Public Profile URL** — A `/profile/:username` URL that resolves on the same device where the profile was created.
 
 ---
 
@@ -228,8 +228,8 @@ This project uses **Bun** as its package manager (`bun.lock` and `bunfig.toml`).
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd tanstack_start_ts
+git clone https://github.com/BhumikaVP/music-aura-lab.git
+cd music-aura-lab
 
 # Install dependencies
 bun install
@@ -255,33 +255,39 @@ bun run format     # Run Prettier
 
 No environment variables are required to run the app in **Demo Mode**.
 
-If you choose to wire up live Spotify OAuth in the future, you would need:
+If you choose to wire up live Spotify OAuth in the future, keep the Client Secret server-side:
 
 ```bash
+# Public / browser-safe
 VITE_SPOTIFY_CLIENT_ID=your_client_id
-VITE_SPOTIFY_CLIENT_SECRET=your_client_secret
 VITE_SPOTIFY_REDIRECT_URI=http://localhost:8080/auth/callback
+
+# Server-side only (e.g. in a TanStack Start server function)
+SPOTIFY_CLIENT_SECRET=your_client_secret
 ```
 
-| Variable | Purpose |
-| --- | --- |
-| `VITE_SPOTIFY_CLIENT_ID` | Spotify application client ID |
-| `VITE_SPOTIFY_CLIENT_SECRET` | Spotify application client secret |
-| `VITE_SPOTIFY_REDIRECT_URI` | OAuth redirect URI registered in the Spotify app |
+| Variable | Purpose | Location |
+| --- | --- | --- |
+| `VITE_SPOTIFY_CLIENT_ID` | Spotify application client ID | Client / public |
+| `VITE_SPOTIFY_REDIRECT_URI` | OAuth redirect URI registered in the Spotify app | Client / public |
+| `SPOTIFY_CLIENT_SECRET` | Spotify application client secret | Server-side only |
+
+> ⚠️ **Never** put the Spotify Client Secret in a `VITE_*` variable, never expose it in browser/client-side code, and never commit secrets to GitHub. The Client ID can be public where appropriate; the Client Secret must always be handled server-side.
 
 ---
 
 ## 🎵 Spotify Setup (Optional)
 
-Live Spotify OAuth is currently scaffolded but not fully wired. To complete the integration:
+Live Spotify OAuth is currently scaffolded but not fully wired. To complete the integration safely:
 
 1. Create an app at the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard).
 2. Add the redirect URI (e.g. `http://localhost:8080/auth/callback`).
-3. Add the required environment variables from the section above.
-4. Implement the OAuth handshake and fetch the user's top artists, top tracks, and audio features.
-5. Pipe the fetched data into the existing `analyze()` function.
+3. Add `VITE_SPOTIFY_CLIENT_ID` and `VITE_SPOTIFY_REDIRECT_URI` for the client-side OAuth flow.
+4. Store `SPOTIFY_CLIENT_SECRET` as a server-side secret only (e.g. in a TanStack Start server function or your hosting provider's secret store).
+5. Implement the OAuth handshake: redirect the user to Spotify, exchange the authorization code for an access token using the server-side secret, then fetch the user's top artists, top tracks, and audio features.
+6. Pipe the fetched data into the existing `analyze()` function.
 
-Until then, **Demo Mode** can be used to experience the full analysis, share card, and public profile flow.
+Until then, **Demo Mode** can be used to experience the full analysis, share card, and public profile URL flow without any credentials.
 
 ---
 
