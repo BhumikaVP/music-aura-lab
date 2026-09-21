@@ -67,7 +67,7 @@ function AnalyzePage() {
       navigate({ to: "/results" });
     } catch {
       toast.error("Analysis failed", { description: "Something broke while scoring your taste." });
-      navigate({ to: "/connect", search: {} });
+      navigate({ to: "/connect" });
     }
   }, [navigate, source]);
 
