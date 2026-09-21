@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/vibeprint/Navbar";
 import { Footer } from "@/components/vibeprint/Footer";
 import { FloatingVisual } from "@/components/vibeprint/FloatingVisual";
-import { SpotifyConnectButton } from "@/components/vibeprint/SpotifyConnectButton";
+import { SpotifyConnect } from "@/components/vibeprint/SpotifyConnectButton";
 import { DemoButton } from "@/components/vibeprint/DemoButton";
 import { Reveal } from "@/components/vibeprint/Reveal";
 import { ARCHETYPES } from "@/lib/vibeprint/archetypes";
@@ -52,7 +52,7 @@ function Landing() {
               actually want to post — archetype, music DNA, mood spectrum and your alter ego.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <SpotifyConnectButton />
+              <SpotifyConnect />
               <DemoButton />
             </div>
             <p className="mt-4 text-xs text-muted-foreground">
@@ -121,7 +121,7 @@ function Landing() {
               Every result exports as a story-sized card, plus a public link friends can open.
             </p>
             <div className="mt-8 flex justify-center gap-3">
-              <SpotifyConnectButton />
+              <SpotifyConnect />
               <DemoButton />
             </div>
           </Reveal>
