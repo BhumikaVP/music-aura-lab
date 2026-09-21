@@ -161,7 +161,9 @@ Each archetype has a dedicated scoring function that weights relevant signals; t
 - **Sonner** — Toast notifications
 - **shadcn/ui** — Reusable UI primitives (`src/components/ui/`)
 
-> The Spotify Web API is not currently wired into the live flow. Demo mode fully exercises the analysis and sharing pipeline.
+- **Spotify Web API** — Server-side OAuth (Authorization Code flow) and listening-data fetch
+
+> Demo Mode requires no credentials and fully exercises the analysis and sharing pipeline.
 
 ---
 
@@ -255,39 +257,45 @@ bun run format     # Run Prettier
 
 No environment variables are required to run the app in **Demo Mode**.
 
-If you choose to wire up live Spotify OAuth in the future, keep the Client Secret server-side:
+Live Spotify OAuth is implemented and runs entirely server-side. Both variables below are **server-only** — there is no `VITE_*` Spotify variable, by design:
 
 ```bash
-# Public / browser-safe
-VITE_SPOTIFY_CLIENT_ID=your_client_id
-VITE_SPOTIFY_REDIRECT_URI=http://localhost:8080/auth/callback
-
-# Server-side only (e.g. in a TanStack Start server function)
+# .env — server-side only, never commit this file
+SPOTIFY_CLIENT_ID=your_client_id
 SPOTIFY_CLIENT_SECRET=your_client_secret
+
+# Optional: defaults to <request origin>/api/public/spotify/callback
+SPOTIFY_REDIRECT_URI=http://localhost:8080/api/public/spotify/callback
 ```
 
 | Variable | Purpose | Location |
 | --- | --- | --- |
-| `VITE_SPOTIFY_CLIENT_ID` | Spotify application client ID | Client / public |
-| `VITE_SPOTIFY_REDIRECT_URI` | OAuth redirect URI registered in the Spotify app | Client / public |
+| `SPOTIFY_CLIENT_ID` | Spotify application client ID | Server-side only |
 | `SPOTIFY_CLIENT_SECRET` | Spotify application client secret | Server-side only |
+| `SPOTIFY_REDIRECT_URI` | Overrides the auto-derived OAuth callback URL | Server-side only |
 
-> ⚠️ **Never** put the Spotify Client Secret in a `VITE_*` variable, never expose it in browser/client-side code, and never commit secrets to GitHub. The Client ID can be public where appropriate; the Client Secret must always be handled server-side.
+> ⚠️ **Never** put the Spotify Client Secret in a `VITE_*` variable, never expose it in browser/client-side code, and never commit secrets to GitHub. All Spotify credentials and access tokens stay on the server; the browser only ever sees an `HttpOnly` session cookie.
 
 ---
 
-## 🎵 Spotify Setup (Optional)
-
-Live Spotify OAuth is currently scaffolded but not fully wired. To complete the integration safely:
+## 🎵 Spotify Setup
 
 1. Create an app at the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard).
-2. Add the redirect URI (e.g. `http://localhost:8080/auth/callback`).
-3. Add `VITE_SPOTIFY_CLIENT_ID` and `VITE_SPOTIFY_REDIRECT_URI` for the client-side OAuth flow.
-4. Store `SPOTIFY_CLIENT_SECRET` as a server-side secret only (e.g. in a TanStack Start server function or your hosting provider's secret store).
-5. Implement the OAuth handshake: redirect the user to Spotify, exchange the authorization code for an access token using the server-side secret, then fetch the user's top artists, top tracks, and audio features.
-6. Pipe the fetched data into the existing `analyze()` function.
+2. Add the redirect URI `http://localhost:8080/api/public/spotify/callback` (and the equivalent URL for your deployed domain).
+3. Put `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET` in your local `.env` or your host's secret store.
+4. Run `bun run dev` and click **Connect Spotify** on the landing or connect screen.
 
-Until then, **Demo Mode** can be used to experience the full analysis, share card, and public profile URL flow without any credentials.
+**How the flow works**
+
+- `GET /api/public/spotify/login` generates a random `state`, stores it in an `HttpOnly` cookie, and redirects to Spotify's authorization page (Authorization Code flow).
+- `GET /api/public/spotify/callback` validates `state`, exchanges the code for tokens using the client secret server-side, and stores the session in an `HttpOnly`, `SameSite=Lax` cookie.
+- A server function fetches the profile, top artists, top tracks, and recently played tracks, normalizes them into the existing VibePrint data model, and feeds them into the same deterministic `analyze()` engine used by Demo Mode. Tokens are refreshed automatically when expired.
+
+**Scopes requested** (minimum needed): `user-top-read`, `user-read-recently-played`.
+
+> Spotify's audio-features endpoint is no longer available to new applications, so track mood values are derived deterministically from artist genres, popularity, and track identifiers. Results are stable and never produce empty or invalid sections.
+
+If Spotify credentials are absent, the Connect screen explains this and **Demo Mode** still delivers the full analysis, share card, and public profile flow.
 
 ---
 
