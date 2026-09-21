@@ -8,9 +8,8 @@ import { getSpotifyUserData } from "@/lib/vibeprint/spotify.functions";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/analyze")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    source: search["source"] === "spotify" ? ("spotify" as const) : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { source?: "spotify" } =>
+    search["source"] === "spotify" ? { source: "spotify" } : {},
   head: () => ({
     meta: [
       { title: "Reading your musical DNA — VibePrint" },

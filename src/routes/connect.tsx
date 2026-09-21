@@ -21,9 +21,10 @@ const ERROR_COPY: Record<string, string> = {
 };
 
 export const Route = createFileRoute("/connect")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    spotify_error: typeof search["spotify_error"] === "string" ? search["spotify_error"] : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { spotify_error?: string } =>
+    typeof search["spotify_error"] === "string"
+      ? { spotify_error: search["spotify_error"] }
+      : {},
   head: () => ({
     meta: [
       { title: "Connect Spotify — VibePrint" },
